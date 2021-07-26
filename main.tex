@@ -1,0 +1,150 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{todonotes}
+%\usepackage{lineno}
+%\linenumbers
+\usepackage{wrapfig,lipsum,booktabs}
+\usepackage{xcolor}
+\usepackage{soul}
+
+\usepackage{amsthm}
+%\usepackage{algorithms}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[amsmath]{ntheorem}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition} % amsthm only
+
+\usepackage{hyperref}
+
+\usepackage[english]{babel}
+\usepackage[autostyle]{csquotes}
+\usepackage[
+    backend=biber,
+    style=numeric,
+    citestyle=numeric,
+    sortlocale=en_US,
+    natbib=true,
+    maxbibnames=99,
+    giveninits=true,
+    url=false, 
+    doi=false,
+    eprint=false
+]{biblatex}
+\addbibresource{anm.bib}
+
+\usepackage{cleveref}
+\crefname{theorem}{theorem}{theorems}
+\crefname{algorithm}{algorithm}{algorithms}
+\crefname{table}{table}{tables}
+%\Crefname{corollary}{corollary}{corollaries}
+
+\graphicspath{{/home/ashishbhatt/Documents/scipro-primer/src-4th/ode2/}{/home/ashish/Documents/pySolver/src-4th/ode2/}}
+
+\newcommand{\der}[2]{\frac{d #1}{d #2}}
+\newcommand{\ddt}[1][]{\frac{d #1}{dt}}
+\newcommand{\ff}[1][]{\bm{f}^{#1}}
+\newcommand{\fq}[1][]{\bm{q}^{#1}}
+\newcommand{\fp}[1][]{\bm{p}^{#1}}
+\newcommand{\fz}[1][]{\bm{z}^{#1}}
+\newcommand{\fx}[1][]{\bm{x}^{#1}}
+\newcommand{\fy}[1][]{\bm{y}^{#1}}
+\newcommand{\fu}[1][]{\bm{u}^{#1}}
+\newcommand{\fA}[1][]{\bm{A}^{#1}}
+\newcommand{\fB}[1][]{\bm{B}^{#1}}
+\newcommand{\fC}[1][]{\bm{C}^{#1}}
+\newcommand{\fD}[1][]{\bm{D}^{#1}}
+\newcommand{\fE}[1][]{\bm{E}^{#1}}
+\newcommand{\fQ}[1][]{\bm{Q}^{#1}}
+\newcommand{\fP}[1][]{\bm{P}^{#1}}
+\newcommand{\fZ}[1][]{\bm{Z}^{#1}}
+\newcommand{\fU}[1][]{\bm{U}^{#1}}
+\newcommand{\fV}[1][]{\bm{V}^{#1}}
+\newcommand{\fW}[1][]{\bm{W}^{#1}}
+\newcommand{\fY}[1][]{\bm{Y}^{#1}}
+\newcommand{\fQh}[1][]{\bm{\widehat{Q}}^{#1}}
+\newcommand{\fPh}[1][]{\bm{\widehat{P}}^{#1}}
+\newcommand{\fZh}[1][]{\bm{\widehat{Z}}^{#1}}
+\newcommand{\fqb}[1][]{\bar{\bm{q}}^{#1}}
+\newcommand{\fpb}[1][]{\bar{\bm{p}}^{#1}}
+\newcommand{\flambda}{\bm{\lambda}}
+\newcommand{\flambdan}[2]{\flambda_{(#1)}^{#2}}
+\newcommand{\fzero}{\bm{0}}
+\newcommand{\fg}{\bm{g}}
+\newcommand{\fk}{\bm{k}}
+\newcommand{\fG}{\bm{G}}
+\newcommand{\gradH}[2][]{\bm{\nabla_{{#2}}} H(\fq[#1],\fp[#1])}
+\newcommand{\gradHz}[1][]{\bm{\nabla_{z}} H(\fz[#1])}
+\newcommand{\gH}[4]{\bm{\nabla_{{#3}}} \widetilde{H}(e^{#4\gamma\dt/4}\fq[#1],\fp[#2])}
+\newcommand{\dt}{{\Delta t}}
+\newcommand{\dx}{{\Delta x}}
+\newcommand{\fpsi}[1][]{\bm{\psi}_{#1 \dt}}
+\newcommand{\fphi}[1][]{\bm{\phi}_{#1 \dt}}
+\newcommand{\fvarphi}{\bm{\varphi}}
+\newcommand{\fpsih}[1][]{\widehat{\bm{\psi}}_{#1 \dt}}
+\newcommand{\fchi}[1][]{\bm{\chi}_{#1}}
+\newcommand{\norm}[2][]{\left\| #2\right\|_{#1}}
+\newcommand{\falpha}{\bm{\alpha}}
+\newcommand{\fI}{\bm{I}}
+\newcommand{\fJ}{\bm{J}}
+\newcommand{\bigOh}{\mathcal{O}}
+\newcommand{\dimp}{PCIMP}
+\newcommand{\eimp}{PIMP}
+\newcommand{\dcsv}{PCSV}
+
+\newcommand{\mli}[1]{\mathit{#1}}
+\newcommand{\imp}{$\mli{IMP}_{\dt}$}
+\newcommand{\cimp}{{$\mli{CIMP}_{\dt}$}}
+\newcommand{\csv}{{$\mli{CSV}_{\dt}$}}
+\providecommand{\keywords}[1]
+{
+  \small	
+  \textbf{\textit{Keywords---}} #1
+}
+
+\title{Reduced basis model order reduction of dissipatively perturbed constrained Hamiltonian systems}
+
+%\author{Ashish Bhatt \\
+%        \small 218 Science Block \\
+%        \small Department of Mathematics and Computing \\
+%        \small IIT (ISM) Dhanbad, India, 826004 \\
+%        \small email: \texttt{ashishbhatt@iitism.ac.in}; Corresponding author
+%}
+
+\begin{document}
+\maketitle
+
+%\input{abstract}
+
+%\keywords{constrained Hamiltonian system, dissipation, conformal symplectic, symmetric, structure preservation, higher-order, projection method, KdV}
+
+\input{intro}
+
+\input{mor}
+
+%\input{prelims}
+%
+%\input{methods}
+%
+%\input{stability}
+%
+\input{results}
+%
+%\input{conclusion}
+
+%\paragraph*{Acknowledgment}
+%We wish to thank the anonymous reviewers for their critical remarks, which have improved this manuscript's clarity and quality.
+
+\printbibliography
+\end{document}
