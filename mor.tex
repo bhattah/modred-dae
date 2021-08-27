@@ -1,5 +1,5 @@
 \section{MOR of \cref{eq:chs}} \label{sec:mor}
-We begin by addressing our first objective -- structure-preserving reduction (SPR) of \cref{eq:chs} using a reduced basis method. To this end, let us consider the following generalization of \cref{eq:chs}.
+We begin by addressing our first objective -- structure-preserving reduction (SPR) of \cref{eq:chs} using a reduced basis method. To this end, let us consider the following equivalent formulation of \cref{eq:chs}.
 \begin{gather}
 \left.
 \begin{aligned} \label{eq:chs-z}
@@ -8,20 +8,22 @@ We begin by addressing our first objective -- structure-preserving reduction (SP
 \end{aligned}
 \right\}
 \end{gather}
-Here $\fz(t):\mathbb{R} \to \mathbb{R}^{2d}$ is the solution of the system, and the structure matrix $\fJ$ is skew-symmetric and non-singular. The smooth function $\tilde{H} = H +\fg^{\top} \flambda$ is the augmented Hamiltonian, $\gamma >0$ is the dissipation parameter, and $\fg \in \mathbb{R}^m$ are the constraints. The separable system \eqref{eq:chs} can be deduced from \cref{eq:chs-z} replacing $\gamma$ by $\gamma/2$, $H(\fz)$ by $H(\fq,\fp) +\frac{\gamma}{2}\fz$, and the structure matrix $\fJ$ by
-\begin{align*}
+Here $\fz(t):\mathbb{R} \to \mathbb{R}^{2d}$ and $\flambda$ are the solution of the system, and the structure matrix $\fJ$ is skew-symmetric and non-singular. The smooth function $\tilde{H}(\fz, \flambda) = H(\fz) +\fg^{\top} \flambda$ is the augmented Hamiltonian, and $\fg \in \mathbb{R}^m$ are the constraints. The separable system \eqref{eq:chs} can be recovered from \cref{eq:chs-z} by making these replacements:
+$$\fz = \begin{bmatrix}
+\fq \\
+\fp
+\end{bmatrix}, ~ H(\fz) = H(\fq, \fp) +\gamma \fq \cdot \fp, ~ \fJ =
 \begin{bmatrix}
 \fzero & \fI \\
 -\fI & \fzero
-\end{bmatrix}.
-\end{align*}
+\end{bmatrix}.$$
 The system \eqref{eq:chs-z} is \emph{conformal symplectic} since
 $$d\fz \wedge \fJ^{-1} d\fz = -2\gamma d\fz \wedge \fJ^{-1} d\fz,$$
 where $d\fz$ is the solution of the variational equation associated with \eqref{eq:chs-z}. We refer to \cref{eq:chs-z} as \emph{constrained perturbed Hamiltonian system} (CPHS).
 
 Let us assume that we have obtained the projection bases $\fV_r, ~\fW_r$ such that
 $$\fz(t) \approx \fV_r \fz_r(t), ~ \nabla_z \tilde{H}(\fz(t)) \approx \fW_r \ff_r(t),$$
-respectively, for some $\ff_r \in \mathbb{R}^r$. Assuming $\fV[\top]_r \fW_r = \fI$, it follows that
+respectively, for some $\ff_r(t) \in \mathbb{R}^r$. Assuming $\fV[\top]_r \fW_r = \fI$, it follows that
 \begin{align*}
 \nabla_z \tilde{H}(\fV_r \fz_r) 
 &\approx \nabla_z \tilde{H} (\fz) \\
@@ -32,11 +34,11 @@ respectively, for some $\ff_r \in \mathbb{R}^r$. Assuming $\fV[\top]_r \fW_r = \
 \end{align*}
 where $\tilde{H}_r(\fz_r) = \tilde{H}(\fV_r \fz_r).$
 
-Substituting $\fz(t) \approx \fV_r \fz_r(t), ~\nabla_z \tilde{H}(\fV_r \fz_r) \approx \fW_r \nabla_{\fz_r} \tilde{H}_r (\fz_r)$ in \cref{eq:chs-z}, one gets the reduced system
+Substituting $\fz(t) \approx \fV_r \fz_r(t), ~\nabla_z \tilde{H}(\fV_r \fz_r) \approx \fW_r \nabla_{\fz_r} \tilde{H}_r (\fz_r)$ in \cref{eq:chs-z}, and multiplying the resulting equation with $\fW[\top]_r$ from the left, one gets the reduced system
 \begin{gather}
 \left.
 \begin{aligned} \label{eq:chs_r}
-\dot{\fz_r} &= \fJ_r \nabla_{\fz_r} \tilde{H}_r(\fz_r) -\gamma \fz_r,\\
+\dot{\fz}_r &= \fJ_r \nabla_{\fz_r} \tilde{H}_r(\fz_r) -\gamma \fz_r,\\
 \fzero &= \fg(\fq_r),
 \end{aligned}
 \right\}
@@ -55,7 +57,7 @@ The reduced system \eqref{eq:chs_r} is again conformal symplectic because the Ja
 
 We further reduce the nonlinearities in \cref{eq:chs_r} with the discrete empirical interpolation method (DEIM). To this end, let us assume that the Hamiltonian $H$ can be expressed as
 $$H = \frac{1}{2} \fz[\top] \fQ \fz + h(\fz)$$
-with $\fQ$ being a positive-definite matrix and $h$ being  the nonlinear part of $H$. Let us define $\tilde{h} = h+\fg^{\top} \flambda$, and assume that $\nabla_{\fz} \tilde{h}(\fz) \approx \fU_l \fk_l(t)$ and that $\fV[\top]_r \fQ \fV_r = \fI, ~ \fU[\top]_l \fQ \fU_l = \fI$. Let us further assume the DEIM projection basis $\mathbb{P} = \fU_l (\fE[\top] \fU_l)^{-1} \fE[\top]$ for the hyper-reduction of $\tilde{h}$.
+with $\fQ$ being a positive-definite matrix and $h$ being the non-quadratic part of $H$. Let us define $\tilde{h} = h+\fg^{\top} \flambda$, and assume that $\nabla_{\fz} \tilde{h}(\fz(t)) \approx \fU_l \fk_l(t)$ and that $\fV[\top]_r \fQ \fV_r = \fI, ~ \fU[\top]_l \fQ \fU_l = \fI$. Let us further assume the DEIM projection basis $\mathbb{P} = \fU_l (\fE[\top] \fU_l)^{-1} \fE[\top]$ for the hyper-reduction of $\tilde{h}$.
 % and the basis $\mathbb{P}_2 = \fY_l (\fE[\top] \fY_l)^{-1} \fE[\top]$ for the hyper-reduction of $\fg$. 
 %Then the hyper-reduced system reads
 %\begin{gather}
@@ -78,7 +80,7 @@ Then the hyper-reduced system reads
 \end{aligned}
 \right\}
 \end{gather}
-Here $\hat{H} = \frac{1}{2} \fz[\top] \fQ \fz + \mathbb{P} \tilde{h}(\mathbb{P}^{\top} \fz)$, and $\nabla_{\hat{\fz}_r} \hat{H}_r(\hat{\fz}_r) = \fz_r + \fV[\top]_r \mathbb{P} \nabla_{\fz} \tilde{h}(\mathbb{P}^{\top} \fV_r  \hat{\fz}_r)$. The hyper-reduced system \eqref{eq:chs_hr} is also conformal symplectic because the Jacobian of $\hat{H}_r$ is symmetric. Indeed
+Here $\hat{H}_r(\fz_r) = \hat{H}(\fV_r \fz_r)$, $\hat{H} = \frac{1}{2} \fz[\top] \fQ \fz + \tilde{h}(\mathbb{P}^{\top} \fz)$, and $\nabla_{\hat{\fz}_r} \hat{H}_r(\hat{\fz}_r) = \fz_r + \fV[\top]_r \mathbb{P} \nabla_{\fz} \tilde{h}(\mathbb{P}^{\top} \fV_r  \hat{\fz}_r)$. The hyper-reduced system \eqref{eq:chs_hr} is also conformal symplectic because the Jacobian of $\hat{H}_r$ is symmetric. Indeed
 $$\partial_{\hat{\fz}_r^2} \hat{H}_r(\hat{\fz}_r) = \fI + \fV[\top]_r \mathbb{P} \partial_{\fz[2]} \tilde{h}(\mathbb{P}^{\top} \fV_r \hat{\fz}_r) \mathbb{P}^{\top} \fV_r.$$
 This implies that the Jacobian $\partial_{\hat{\fz}_r^2} \hat{H}_r(\hat{\fz}_r)$ is symmetric and, therefore,
 \begin{align*}

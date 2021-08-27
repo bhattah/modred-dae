@@ -4,22 +4,20 @@ In this paper, we consider the model order reduction (MOR) of the differential a
 \left.
 \begin{aligned} \label{eq:chs}
 \dot{\fq} &= \gradH{p},\\
-\dot{\fp} &= -\gradH{q} - \gamma \fp -\fG(\fq)^\top \flambda,\\
+\dot{\fp} &= -\gradH{q} - 2\gamma \fp -\fG(\fq)^\top \flambda,\\
 \fzero &= \fg(\fq).
 \end{aligned}
 \right\}
 \end{gather}
-Here $\fq(t),~\fp(t):\mathbb{R} \to \mathbb{R}^d$ are referred to as the position and conjugate momenta, respectively, and constitute the solution of the system. The smooth function $H:\mathbb{R}^{2d} \to \mathbb{R}$ is the Hamiltonian, $\gamma >0$ is the dissipation parameter, $\fg \in \mathbb{R}^m$ are the holonomic constraints (depend only on $\fq$), $\fG$ is the Jacobian matrix of $\fg$, i.e., $\fG(\fq) = \fg_{\fq}(\fq)$, and $\flambda \in \mathbb{R}^m$ are the Lagrange multipliers. By differentiating the constraint $\fg(\fq)=\fzero$, we see that the solution of \cref{eq:chs} evolves on the manifold defined by the phase-space
+Here $\fq(t),~\fp(t):\mathbb{R} \to \mathbb{R}^d$ are referred to as the position and conjugate momenta, respectively, and constitute the solution of the system. The smooth function $H:\mathbb{R}^{2d} \to \mathbb{R}$ is the Hamiltonian, $\gamma >0$ is the dissipation parameter, $\fg \in \mathbb{R}^m$ are the holonomic constraints (depend only on $\fq$), $\fG$ is the Jacobian matrix of $\fg$, i.e., $\fG(\fq) = \fg_{\fq}(\fq)$, and $\flambda \in \mathbb{R}^m$ are the unknown Lagrange multipliers. By differentiating the constraint $\fg(\fq)=\fzero$, we see that the solution of \cref{eq:chs} evolves on the manifold defined by the phase-space
 \begin{align*}
 \mathfrak{P} = \{(\fq,\fp) \in \mathbb{R}^{2d}: \fg(\fq)=\fzero,~\fG(\fq)\gradH{p}=\fzero \}.
 \end{align*}
 Here and henceforth we have dropped the explicit dependence of variables on $t$ to keep the notation concise. The constraints defining $\mathfrak{P}$ are also known as the \emph{weak invariants} of the system. \Cref{eq:chs} can be thought of as a dissipative perturbation of a constrained Hamiltonian system. Constrained Hamiltonian systems find application in many areas including mechanics, chemical processes, and molecular dynamics.
 
-\emph{Constrained Hamiltonian system} is an important special case of \cref{eq:chs} when $\gamma =0$. In this special case, the Hamiltonian $H$ and symplecticness are constants of motion of the constrained Hamiltonian system. The \emph{Hamiltonian system} is obtained from \cref{eq:chs} when $\fg=\fzero, ~\gamma=0$. Structure-preserving techniques, preserving the symplecticness through MOR, have been developed in \cite{Afkham2017,Buchfink2019,Peng2016}.
+The \emph{constrained Hamiltonian system} is an important special case of \cref{eq:chs} when $\gamma =0$. In this special case, the Hamiltonian $H$ and symplecticness are constants of motion of the constrained Hamiltonian system. The \emph{Hamiltonian system} is obtained from \cref{eq:chs} when both $\fg$ and $\gamma$ vanish. MOR techniques preserving the symplecticness of the Hamiltonian systems have been developed in \cite{Afkham2017,Buchfink2019,Hesthaven2021,Peng2016}, e.g.
 
-A generalization of the Hamiltonian system is \emph{port-Hamiltonian system}, which is the aggregate system model obtained when the core dynamics of the subsystem components are described by variational principles. MOR techniques preserving the port-Hamiltonian structure of the port-Hamiltonian systems are developed in \cite{Chaturantabut2016}.
-
-Another relevant DAE that finds a lot of mention in the literature is the \emph{descriptor system}
+A generalization of the Hamiltonian system is a \emph{port-Hamiltonian system}, which is the aggregate system model obtained when the core dynamics of the subsystem components are described by variational principles. MOR techniques preserving the port-Hamiltonian structure of the port-Hamiltonian systems are developed in \cite{Chaturantabut2016}. Another relevant DAE that finds a lot of mention in the literature is the linear \emph{descriptor system}
 \begin{gather*}
 \left.
 \begin{aligned}
@@ -30,7 +28,7 @@ Another relevant DAE that finds a lot of mention in the literature is the \emph{
 \end{gather*}
 where $\fx \in \mathbb{R}^n, ~\fu \in \mathbb{R}^m, ~\fy \in \mathbb{R}^p$ are states, inputs, outputs respectively. Matrix $\fE \in \mathbb{R}^{n \times n}$ is a singular matrix, and $\fA \in \mathbb{R}^{n \times n}, ~\fB \in \mathbb{R}^{n \times m}, ~ \fC \in \mathbb{R}^{p \times n}, ~\fD \in \mathbb{R}^{p \times m}$. The descriptor systems have been reduced using interpolatory projection methods in \cite{Gugercin2013} and using balanced truncation in \cite{Benner2017,Stykel2004}.
 
-The research on MOR of DAEs so far has mainly focused on the reduced basis MOR of the port-Hamiltonian systems and on interpolatory and balanced truncation MOR of the descriptor systems. In this paper, we take a reduced-basis approach to MOR of the nonlinear DAE \eqref{eq:chs}. Out objective is twofold:
+The research on MOR of DAEs so far has mainly focused on the reduced basis MOR of the port-Hamiltonian systems \cite{Chaturantabut2016} and on interpolatory and balanced truncation MOR of the descriptor systems \cite{Benner2017,Gugercin2013,Stykel2004}. In this paper, we take a reduced-basis approach to MOR of the nonlinear DAE \eqref{eq:chs}. Our objective is twofold:
 \begin{itemize}
 \item To reduce \cref{eq:chs} using the reduced basis method such that the conformal symplecticness of the equation is preserved through MOR
 \item To accelerate the simulation of the reduced order model (ROM) using a nonlinearity reduction technique, such as DEIM, by structure-preserving hyper-reduction of the conservative and constraining forces in \cref{eq:chs}
